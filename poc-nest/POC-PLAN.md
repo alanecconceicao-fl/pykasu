@@ -8,8 +8,6 @@ The first screen answers:
 
 > What are my configured sources reporting now, and what is new since my previous visit?
 
-Use [PRODUCT-STRATEGY.md](../PRODUCT-STRATEGY.md) as the strategic baseline, with your latest instructions overriding its initial implementation sequence. Leave the strategy file unchanged.
-
 **Include:**
 
 - Source configuration.
