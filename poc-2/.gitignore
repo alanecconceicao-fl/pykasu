@@ -1,0 +1,8 @@
+node_modules/
+dist/
+coverage/
+data/
+*.sqlite3
+*.sqlite3-shm
+*.sqlite3-wal
+.env

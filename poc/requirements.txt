@@ -1,0 +1,7 @@
+# Python 3.12 runtime dependencies.  Keep these direct dependencies exact.
+Flask==3.1.0
+waitress==3.0.2
+feedparser==6.0.11
+trafilatura==2.0.0
+requests==2.32.3
+pydantic==2.10.6

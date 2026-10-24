@@ -1,0 +1,17 @@
+# Replace news.example.com with the hostname provisioned for this VM before
+# installing. Caddy obtains and renews HTTPS certificates automatically when
+# the hostname's DNS points at this server and ports 80/443 are reachable.
+news.example.com {
+	encode zstd gzip
+
+	# Waitress is deliberately bound to loopback by the systemd environment.
+	reverse_proxy 127.0.0.1:8000
+
+	header {
+		-Server
+		X-Content-Type-Options "nosniff"
+		X-Frame-Options "DENY"
+		Referrer-Policy "same-origin"
+		Permissions-Policy "camera=(), geolocation=(), microphone=()"
+	}
+}

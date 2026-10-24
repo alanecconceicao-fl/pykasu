@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>=75.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pykasu-poc"
+version = "0.1.0"
+description = "Chronological source-item news update proof of concept"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+  "Flask==3.1.0",
+  "waitress==3.0.2",
+  "feedparser==6.0.11",
+  "trafilatura==2.0.0",
+  "requests==2.32.3",
+  "pydantic==2.10.6",
+]
+
+[tool.setuptools]
+packages = ["pykasu"]
+
+[tool.setuptools.package-data]
+pykasu = ["templates/*.html", "static/*.css", "static/*.js"]

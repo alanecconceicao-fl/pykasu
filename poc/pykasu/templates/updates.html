@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block title %}Updates · PYKASU{% endblock %}
+{% block content %}
+  <section class="page-heading">
+    <div>
+      <p class="eyebrow">Chronological source updates</p>
+      <h1>What your sources are publishing now</h1>
+      <p>Saved headlines appear first. Short summaries are added separately when the source text supports one.</p>
+    </div>
+    <button id="updates-available" class="button" hidden type="button">Updates available</button>
+  </section>
+
+  <form class="filters" method="get" action="{{ url_for('updates') }}" aria-label="Filter updates">
+    <label>
+      Time range
+      <select name="window">
+        <option value="24h" {% if selected_window == '24h' %}selected{% endif %}>Last 24 hours</option>
+        <option value="7d" {% if selected_window == '7d' %}selected{% endif %}>Last 7 days</option>
+      </select>
+    </label>
+    <label>
+      Source
+      <select name="source">
+        <option value="">All enabled sources</option>
+        {% for source in sources %}
+          <option value="{{ source.id }}" {% if source.id == selected_source_id %}selected{% endif %}>{{ source.name }}</option>
+        {% endfor %}
+      </select>
+    </label>
+    <label class="search-field">
+      Search headlines and links
+      <input name="q" value="{{ search }}" maxlength="160" autocomplete="off">
+    </label>
+    <button class="button secondary" type="submit">Apply</button>
+  </form>
+
+  {% if source_health %}
+    <section class="source-health" aria-label="Source freshness">
+      <h2>Source freshness</h2>
+      <ul>
+        {% for source in source_health %}
+          <li>
+            <strong>{{ source.name }}</strong>
+            {% if source.last_success_at %}
+              <span>Last successful check: <time datetime="{{ source.last_success_at }}" title="{{ source.last_success_at }}">{{ source.last_success_at|timestamp }}</time></span>
+            {% else %}
+              <span>Not checked successfully yet</span>
+            {% endif %}
+            {% if source.last_error %}<span class="source-error">Current fetch error: {{ source.last_error }}</span>{% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </section>
+  {% endif %}
+
+  <section id="updates-list" class="updates-list" aria-live="polite">
+    {% include "_items.html" %}
+  </section>
+{% endblock %}

@@ -22,3 +22,21 @@ lerna-debug.log*
 # temp directory
 .temp
 .tmp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Local application data and credentials
+data/
+*.sqlite
+*.sqlite3
+*.db
+.env.local
+.env.*.local
+
+# Test and coverage output
+coverage/
+.pytest_cache/

@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Updates — PYKASU</title><link rel="stylesheet" href="/assets/style.css">
+</head>
+<body data-page="updates">
+  <header class="masthead shell">
+    <a class="brand" href="/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
+    <nav><a class="active" href="/updates">Updates</a><a href="/sources">Sources</a></nav>
+    <button id="refresh" class="button dark">Refresh now <span aria-hidden="true">↻</span></button>
+  </header>
+  <main class="shell">
+    <section class="hero"><div><p class="eyebrow">YOUR SOURCES, IN ONE PLACE</p><h1>What’s happening now?</h1><p class="intro">A chronological view of the latest reporting from your selected sources.</p></div><div class="refresh-card"><span class="dot"></span><span id="freshness">Checking sources…</span></div></section>
+    <section class="filters" aria-label="Filter updates">
+      <label>Time period<select id="window"><option value="24h">Last 24 hours</option><option value="7d">Last 7 days</option></select></label>
+      <label>Source<select id="source"><option value="">All sources</option></select></label>
+      <label class="search">Search<input id="search" type="search" placeholder="Find a headline"></label>
+      <span id="count" class="count"></span>
+    </section>
+    <div id="refresh-banner" class="refresh-banner" hidden><span id="refresh-message">New updates are ready.</span><button id="show-updates" class="text-button">Show updates</button></div>
+    <div id="status" class="status" role="status" aria-live="polite">Loading saved updates…</div>
+    <section id="items" class="items" aria-label="Recent updates"></section>
+  </main>
+  <footer class="shell footer"><span>PYKASU PoC 2</span><span>Headlines are presented as reported by their original sources.</span></footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

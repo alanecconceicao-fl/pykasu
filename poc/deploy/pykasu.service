@@ -1,0 +1,29 @@
+[Unit]
+Description=PYKASU PoC web application
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=simple
+User=pykasu
+Group=pykasu
+WorkingDirectory=/opt/pykasu/poc
+EnvironmentFile=/etc/pykasu/pykasu.env
+ExecStart=/opt/pykasu/.venv/bin/python -m pykasu
+Restart=on-failure
+RestartSec=5s
+UMask=0077
+
+# The application needs only its persistent SQLite directory and outbound
+# network access to configured feeds and the model provider.
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pykasu
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+
+[Install]
+WantedBy=multi-user.target

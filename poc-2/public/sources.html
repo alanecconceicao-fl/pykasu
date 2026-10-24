@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sources — PYKASU</title><link rel="stylesheet" href="/assets/style.css">
+</head>
+<body data-page="sources">
+  <header class="masthead shell">
+    <a class="brand" href="/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
+    <nav><a href="/updates">Updates</a><a class="active" href="/sources">Sources</a></nav>
+    <a class="button dark" href="/updates">View updates <span aria-hidden="true">↗</span></a>
+  </header>
+  <main class="shell sources-main">
+    <section class="hero"><div><p class="eyebrow">MAKE IT YOURS</p><h1>Your sources</h1><p class="intro">Add RSS or Atom feeds and choose how PYKASU reads each source.</p></div><div class="source-count"><strong id="source-count">0</strong><span>sources enabled</span></div></section>
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+    <section class="source-layout">
+      <section id="source-list" class="source-list" aria-label="Configured sources"></section>
+      <aside class="form-card"><p class="eyebrow">NEW SOURCE</p><h2>Add a feed</h2>
+        <form id="source-form">
+          <label>Source name<input name="name" required maxlength="120" placeholder="Example News"></label>
+          <label>RSS or Atom URL<input name="feed_url" type="url" required placeholder="https://example.com/feed.xml"></label>
+          <label class="check"><input name="extract_articles" type="checkbox" checked><span>Extract article text for summaries</span></label>
+          <button class="button accent" type="submit">Save source <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="form-note">A maximum of 10 sources can be enabled. You can disable a source at any time.</p>
+      </aside>
+    </section>
+  </main>
+  <footer class="shell footer"><span>PYKASU PoC 2</span><span>Source configuration is shared by everyone using this public PoC.</span></footer>
+  <script src="/assets/app.js" defer></script>
+</body>
+</html>

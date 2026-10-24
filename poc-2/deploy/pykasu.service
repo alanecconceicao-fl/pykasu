@@ -1,0 +1,26 @@
+[Unit]
+Description=PYKASU Node.js feed reader
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pykasu-node
+Group=pykasu-node
+WorkingDirectory=/opt/pykasu/poc-2
+EnvironmentFile=/etc/pykasu-node/pykasu.env
+ExecStart=/usr/bin/node /opt/pykasu/poc-2/dist/src/main.js
+Restart=on-failure
+RestartSec=5
+UMask=0077
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=/var/lib/pykasu-node
+RestrictAddressFamilies=AF_INET AF_INET6 AF_UNIX
+CapabilityBoundingSet=
+LockPersonality=true
+
+[Install]
+WantedBy=multi-user.target

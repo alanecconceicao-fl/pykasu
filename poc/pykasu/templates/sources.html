@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+{% block title %}Sources · PYKASU{% endblock %}
+{% block content %}
+  <section class="page-heading compact">
+    <div>
+      <p class="eyebrow">Shared configuration</p>
+      <h1>Sources</h1>
+      <p>Everyone visiting this public PoC sees the same configured source list and update state.</p>
+    </div>
+    <p class="limit-note">{{ enabled_count }} of {{ max_enabled_sources }} enabled</p>
+  </section>
+
+  <section class="source-form-card">
+    <h2>Add a source</h2>
+    <form class="source-form" method="post" action="{{ url_for('create_source') }}">
+      <label>
+        Source name
+        <input name="name" maxlength="120" required placeholder="Example News">
+      </label>
+      <label>
+        RSS or Atom URL
+        <input type="url" name="feed_url" required placeholder="https://example.org/feed.xml">
+      </label>
+      <label class="check"><input type="checkbox" name="enabled" checked> Include in refreshes and default Updates</label>
+      <label class="check"><input type="checkbox" name="extract_articles" checked> Try article extraction before using a feed excerpt</label>
+      <button class="button" type="submit">Save source</button>
+    </form>
+  </section>
+
+  {% if sources %}
+    <section class="sources-list">
+      <h2>Configured sources</h2>
+      {% for source in sources %}
+        <article class="source-card {% if not source.enabled %}disabled{% endif %}">
+          <form class="source-form" method="post" action="{{ url_for('edit_source', source_id=source.id) }}">
+            <label>
+              Source name
+              <input name="name" maxlength="120" required value="{{ source.name }}">
+            </label>
+            <label>
+              RSS or Atom URL
+              <input type="url" name="feed_url" required value="{{ source.feed_url }}">
+            </label>
+            <label class="check"><input type="checkbox" name="enabled" {% if source.enabled %}checked{% endif %}> Enabled</label>
+            <label class="check"><input type="checkbox" name="extract_articles" {% if source.extract_articles %}checked{% endif %}> Extract articles</label>
+            <div class="source-status">
+              {% if source.last_success_at %}<span>Last successful check: {{ source.last_success_at|timestamp }}</span>{% else %}<span>Not checked successfully yet</span>{% endif %}
+              {% if source.last_error %}<span class="source-error">Current fetch error: {{ source.last_error }}</span>{% endif %}
+            </div>
+            <button class="button secondary" type="submit">Save changes</button>
+          </form>
+        </article>
+      {% endfor %}
+    </section>
+  {% else %}
+    <section class="empty-state">
+      <h2>Your source list starts empty.</h2>
+      <p>Add an RSS or Atom feed above. PYKASU does not impose default publishers or trust rankings.</p>
+    </section>
+  {% endif %}
+{% endblock %}

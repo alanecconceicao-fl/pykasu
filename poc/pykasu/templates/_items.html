@@ -1,0 +1,28 @@
+{% if items %}
+  {% for item in items %}
+    <article class="item" data-item-id="{{ item.id }}">
+      <div class="item-kicker">
+        <span class="source-name">{{ item.source_names }}</span>
+        {% if item.is_new %}<span class="new-badge">New</span>{% endif %}
+        <time datetime="{{ item.published_at or item.discovered_at }}" title="{{ item.published_at or item.discovered_at }}">
+          {% if item.timestamp_is_discovered %}Discovered{% else %}Published{% endif %} {{ (item.published_at or item.discovered_at)|timestamp }}
+        </time>
+      </div>
+      <h2><a href="{{ item.url }}" rel="noopener noreferrer" target="_blank">{{ item.headline }}</a></h2>
+      {% if item.summary_status == 'ready' %}
+        <p class="summary">{{ item.summary_text }}</p>
+        {% if item.summary_basis == 'feed_excerpt' %}<p class="summary-note">Based on feed excerpt.</p>{% endif %}
+      {% elif item.summary_status == 'unavailable' %}
+        <p class="summary-state unavailable">Summary unavailable{% if item.summary_reason %}: {{ item.summary_reason }}{% endif %}</p>
+      {% else %}
+        <p class="summary-state">Summary pending{% if not has_groq_key %}: server API key is not configured{% elif not summary_service_enabled %}: Groq Zero Data Retention must be enabled{% elif item.summary_reason %}: {{ item.summary_reason }}{% endif %}.</p>
+      {% endif %}
+    </article>
+  {% endfor %}
+{% else %}
+  <section class="empty-state">
+    <h2>No saved updates match this view.</h2>
+    <p>Add an enabled RSS or Atom source, or choose a wider time range. Refreshing will not hide older saved items.</p>
+    <a class="button secondary" href="{{ url_for('sources') }}">Configure sources</a>
+  </section>
+{% endif %}
