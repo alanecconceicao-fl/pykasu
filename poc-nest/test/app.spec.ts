@@ -42,6 +42,20 @@ describe('NestJS HTTP application', () => {
     expect(sources.headers['content-type']).toMatch(/text\/html/);
   });
 
+  it('renders links under the Vercel service prefix', async () => {
+    const wasVercel = process.env.VERCEL;
+    process.env.VERCEL = '1';
+    try {
+      const response = await app.getHttpAdapter().getInstance().inject({ method: 'GET', url: '/updates' });
+      expect(response.statusCode).toBe(200);
+      expect(response.body).toContain('data-base-path="/poc-nest"');
+      expect(response.body).toContain('href="/poc-nest/assets/style.css"');
+    } finally {
+      if (wasVercel === undefined) delete process.env.VERCEL;
+      else process.env.VERCEL = wasVercel;
+    }
+  });
+
   it('manages sources and returns saved state without beginning another refresh', async () => {
     const server = app.getHttpAdapter().getInstance();
     const created = await server.inject({ method: 'POST', url: '/api/sources', payload: { name: 'Example', feed_url: 'https://example.org/rss', enabled: true, extract_articles: true } });

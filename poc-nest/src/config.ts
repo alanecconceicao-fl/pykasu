@@ -31,11 +31,12 @@ function positiveInt(name: string, fallback: number): number {
 }
 
 export function loadSettings(): Settings {
-  const dataDir = path.resolve(process.env.PYKASU_DATA_DIR || './data');
-  const port = positiveInt('PYKASU_PORT', 8001);
+  const defaultDataDir = process.env.VERCEL ? '/tmp/pykasu-nest' : './data';
+  const dataDir = path.resolve(process.env.PYKASU_DATA_DIR || defaultDataDir);
+  const port = positiveInt('PORT', positiveInt('PYKASU_PORT', 8001));
   if (port > 65535) throw new Error('PYKASU_PORT must be between 1 and 65535');
   return {
-    bind: process.env.PYKASU_BIND || '127.0.0.1',
+    bind: process.env.PYKASU_BIND || (process.env.VERCEL ? '0.0.0.0' : '127.0.0.1'),
     port,
     dataDir,
     databasePath: path.join(dataDir, 'pykasu.sqlite3'),

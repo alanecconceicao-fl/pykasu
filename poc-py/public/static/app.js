@@ -1,4 +1,5 @@
 (() => {
+  const basePath = document.body.dataset.basePath || "";
   const statusUrl = document.body.dataset.refreshStatusUrl;
   const status = document.getElementById("refresh-status");
   const availableButton = document.getElementById("updates-available");
@@ -38,7 +39,7 @@
     const list = document.getElementById("updates-list");
     if (!list) return;
     const query = window.location.search || "";
-    const response = await fetch(`/updates/fragment${query}`, { headers: { Accept: "application/json" }, credentials: "same-origin", cache: "no-store" });
+    const response = await fetch(`${basePath}/updates/fragment${query}`, { headers: { Accept: "application/json" }, credentials: "same-origin", cache: "no-store" });
     if (!response.ok) return;
     const data = await response.json();
     list.innerHTML = data.html;

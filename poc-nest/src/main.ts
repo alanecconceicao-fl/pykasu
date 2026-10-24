@@ -8,6 +8,7 @@ async function bootstrap(): Promise<void> {
   const settings = loadSettings();
   const adapter = new FastifyAdapter({ bodyLimit: 64 * 1024, trustProxy: false });
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, adapter, { bufferLogs: true });
+  if (process.env.VERCEL) app.setGlobalPrefix('poc-nest');
   app.enableShutdownHooks();
   const fastify = adapter.getInstance();
   fastify.addHook('onSend', async (_request, reply, payload) => {

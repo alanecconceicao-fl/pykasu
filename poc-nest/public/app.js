@@ -1,5 +1,7 @@
 const $ = (selector) => document.querySelector(selector);
 const escapeHtml = (value) => String(value ?? '').replace(/[&<>"']/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[char]));
+const basePath = document.body.dataset.basePath || '';
+const appPath = (route) => `${basePath}${route}`;
 let visitSequence;
 let lastState;
 let searchTimer;
@@ -33,7 +35,7 @@ function renderUpdates(state) {
       <div class="item-meta">${item.is_new ? '<span class="new-label">NEW</span>' : ''}<span>${escapeHtml(item.source_names || 'Unknown source')}</span><time datetime="${escapeHtml(item.published_at || item.discovered_at)}">${prettyDate(item.published_at || item.discovered_at)}</time></div>
       <h2><a href="${escapeHtml(item.url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(item.headline)}</a><span class="external" aria-hidden="true">↗</span></h2>${summary}
     </article>`;
-  }).join('') : '<div class="empty"><span class="empty-icon">◷</span><h2>No updates in this view</h2><p>Add a source or widen the time period to see more reporting.</p><a href="/sources" class="button accent">Manage sources →</a></div>';
+  }).join('') : `<div class="empty"><span class="empty-icon">◷</span><h2>No updates in this view</h2><p>Add a source or widen the time period to see more reporting.</p><a href="${appPath('/sources')}" class="button accent">Manage sources →</a></div>`;
   const successful = state.sources.filter(s => s.enabled && s.last_success_at);
   $('#freshness').textContent = successful.length ? `Latest source check ${prettyDate(successful.map(s => s.last_success_at).sort().at(-1))}` : 'Waiting for first feed check';
   $('#status').textContent = state.refresh.active ? `Refreshing feeds · ${state.refresh.sources_done} of ${state.refresh.sources_total} checked` : state.refresh.errors?.length ? 'Some sources could not be refreshed. Saved updates are still available.' : 'Your saved updates are up to date.';
@@ -50,7 +52,7 @@ function renderSources(state) {
 }
 
 async function loadState() {
-  const response = await fetch(`/api/state?${params()}`, { cache: 'no-store' });
+  const response = await fetch(`${appPath('/api/state')}?${params()}`, { cache: 'no-store' });
   const state = await response.json();
   if (!response.ok) throw new Error(state.message || 'Could not load application state');
   if (visitSequence === undefined) visitSequence = state.acknowledgedSequence;
@@ -61,7 +63,7 @@ async function loadState() {
 }
 
 async function startRefresh() {
-  await fetch('/api/refresh', { method: 'POST', cache: 'no-store' });
+  await fetch(appPath('/api/refresh'), { method: 'POST', cache: 'no-store' });
   watchRefresh();
 }
 
@@ -69,7 +71,7 @@ function watchRefresh() {
   if (refreshTimer) return;
   refreshTimer = setInterval(async () => {
     try {
-      const statusResponse = await fetch('/api/refresh-status', { cache: 'no-store' });
+      const statusResponse = await fetch(appPath('/api/refresh-status'), { cache: 'no-store' });
       const status = await statusResponse.json();
       if (document.body.dataset.page === 'updates' && status.new_items_available) $('#refresh-banner').hidden = false;
       if (status.active) {
@@ -94,7 +96,7 @@ if (document.body.dataset.page === 'updates') {
     event.preventDefault();
     const form = event.currentTarget;
     const values = Object.fromEntries(new FormData(form));
-    const response = await fetch('/api/sources', { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: values.name, feed_url: values.feed_url, enabled: true, extract_articles: form.elements.extract_articles.checked }) });
+    const response = await fetch(appPath('/api/sources'), { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: values.name, feed_url: values.feed_url, enabled: true, extract_articles: form.elements.extract_articles.checked }) });
     const result = await response.json();
     showNotice(response.ok ? 'Source saved. It will be checked shortly.' : (result.message || 'Could not save this source.'), !response.ok);
     if (response.ok) { form.reset(); form.elements.extract_articles.checked = true; visitSequence = undefined; await loadState(); await startRefresh(); }
@@ -104,7 +106,7 @@ if (document.body.dataset.page === 'updates') {
     if (!button) return;
     const card = button.closest('.source-card');
     const source = lastState.sources.find(s => Number(s.id) === Number(card.dataset.id));
-    const response = await fetch(`/api/sources/${source.id}`, { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: source.name, feed_url: source.feed_url, enabled: card.querySelector('.enabled-toggle').checked, extract_articles: card.querySelector('.extract-toggle').checked }) });
+    const response = await fetch(appPath(`/api/sources/${source.id}`), { method: 'PATCH', headers: { 'content-type': 'application/json' }, body: JSON.stringify({ name: source.name, feed_url: source.feed_url, enabled: card.querySelector('.enabled-toggle').checked, extract_articles: card.querySelector('.extract-toggle').checked }) });
     const result = await response.json();
     showNotice(response.ok ? 'Source settings saved.' : (result.message || 'Could not save source settings.'), !response.ok);
     if (response.ok) { visitSequence = undefined; await loadState(); await startRefresh(); }

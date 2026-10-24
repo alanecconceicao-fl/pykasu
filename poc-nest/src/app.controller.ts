@@ -88,11 +88,14 @@ export class AppController {
   private async page(reply: FastifyReply, filename: string, contentType = 'text/html; charset=utf-8'): Promise<void> {
     const here = path.resolve(process.cwd(), 'public', filename);
     try {
-      const body = await readFile(here);
+      const body = (await readFile(here, 'utf8')).replaceAll('__BASE_PATH__', process.env.VERCEL ? '/poc-nest' : '');
       reply.header('content-type', contentType).header('cache-control', 'no-store, max-age=0').send(body);
     } catch {
       const distPublic = path.resolve(__dirname, '../public', filename);
-      try { reply.header('content-type', contentType).header('cache-control', 'no-store').send(await readFile(distPublic)); }
+      try {
+        const body = (await readFile(distPublic, 'utf8')).replaceAll('__BASE_PATH__', process.env.VERCEL ? '/poc-nest' : '');
+        reply.header('content-type', contentType).header('cache-control', 'no-store').send(body);
+      }
       catch { throw new HttpException('Page asset not found', HttpStatus.NOT_FOUND); }
     }
   }

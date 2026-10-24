@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='app.css') }}">
   </head>
   <body
+    data-base-path="{{ request.script_root }}"
     data-refresh-status-url="{{ url_for('refresh_status') }}"
     data-rendered-sequence="{{ delivered_sequence|default(0) }}"
   >

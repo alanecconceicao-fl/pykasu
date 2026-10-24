@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Sources — PYKASU</title><link rel="stylesheet" href="/assets/style.css">
+  <title>Sources — PYKASU</title><link rel="stylesheet" href="__BASE_PATH__/assets/style.css">
 </head>
-<body data-page="sources">
+<body data-page="sources" data-base-path="__BASE_PATH__">
   <header class="masthead shell">
-    <a class="brand" href="/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
-    <nav><a href="/updates">Updates</a><a class="active" href="/sources">Sources</a></nav>
-    <a class="button dark" href="/updates">View updates <span aria-hidden="true">↗</span></a>
+    <a class="brand" href="__BASE_PATH__/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
+    <nav><a href="__BASE_PATH__/updates">Updates</a><a class="active" href="__BASE_PATH__/sources">Sources</a></nav>
+    <a class="button dark" href="__BASE_PATH__/updates">View updates <span aria-hidden="true">↗</span></a>
   </header>
   <main class="shell sources-main">
     <section class="hero"><div><p class="eyebrow">MAKE IT YOURS</p><h1>Your sources</h1><p class="intro">Add RSS or Atom feeds and choose how PYKASU reads each source.</p></div><div class="source-count"><strong id="source-count">0</strong><span>sources enabled</span></div></section>
@@ -27,6 +27,6 @@
     </section>
   </main>
   <footer class="shell footer"><span>PYKASU PoC 2</span><span>Source configuration is shared by everyone using this public PoC.</span></footer>
-  <script src="/assets/app.js" defer></script>
+  <script src="__BASE_PATH__/assets/app.js" defer></script>
 </body>
 </html>

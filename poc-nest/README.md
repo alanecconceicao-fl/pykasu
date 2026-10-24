@@ -96,3 +96,11 @@ HTTP(S) listener; the NestJS process stays bound to `127.0.0.1`.
 
 Run automated checks with `npm test` and a production compile with
 `npm run build`.
+
+## Vercel services
+
+The repository-root `vercel.json` exposes this NestJS PoC under `/poc-nest`
+and the Flask PoC under `/poc-py`. Select **Services** as the project framework
+in Vercel. This PoC uses temporary SQLite data at `/tmp/pykasu-nest` on Vercel;
+data is not durable or shared across function instances. Its refresh worker is
+best-effort and is not guaranteed to finish after a serverless response.

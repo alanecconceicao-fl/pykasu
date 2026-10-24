@@ -38,7 +38,8 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> "Settings":
-        raw_data_dir = os.environ.get("PYKASU_DATA_DIR", "./data")
+        default_data_dir = "/tmp/pykasu-py" if os.environ.get("VERCEL") else "./data"
+        raw_data_dir = os.environ.get("PYKASU_DATA_DIR", default_data_dir)
         key = os.environ.get("PYKASU_GROQ_API_KEY") or os.environ.get("GROQ_API_KEY")
         return cls(
             data_dir=Path(raw_data_dir).expanduser().resolve(),

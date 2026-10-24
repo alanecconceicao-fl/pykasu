@@ -1,0 +1,32 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "services": {
+    "poc-nest": {
+      "root": "poc-nest",
+      "framework": "nestjs"
+    },
+    "poc-py": {
+      "root": "poc-py",
+      "framework": "flask",
+      "entrypoint": "api.index:app"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/poc-nest",
+      "destination": { "service": "poc-nest" }
+    },
+    {
+      "source": "/poc-nest/(.*)",
+      "destination": { "service": "poc-nest" }
+    },
+    {
+      "source": "/poc-py",
+      "destination": { "service": "poc-py" }
+    },
+    {
+      "source": "/poc-py/(.*)",
+      "destination": { "service": "poc-py" }
+    }
+  ]
+}

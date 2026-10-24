@@ -15,7 +15,7 @@ Use Python 3.12, then install the exact runtime dependencies from this
 directory:
 
 ```sh
-cd poc
+cd poc-py
 python3.12 -m venv .venv
 . .venv/bin/activate
 python -m pip install --upgrade pip
@@ -93,7 +93,7 @@ Create the private data and configuration directories:
 
 ```sh
 sudo install -d -o pykasu -g pykasu -m 700 /var/lib/pykasu /etc/pykasu
-sudo install -m 600 -o root -g pykasu deploy/pykasu.env.example /etc/pykasu/pykasu.env
+sudo install -m 600 -o root -g pykasu poc-py/deploy/pykasu.env.example /etc/pykasu/pykasu.env
 sudoedit /etc/pykasu/pykasu.env
 ```
 
@@ -135,7 +135,7 @@ The application service may stay online while creating a backup:
 
 ```sh
 sudo install -d -o pykasu -g pykasu -m 700 /var/backups/pykasu
-cd /opt/pykasu/poc
+cd /opt/pykasu/poc-py
 sudo -u pykasu env PYKASU_DATA_DIR=/var/lib/pykasu \
   /opt/pykasu/.venv/bin/python -m pykasu.backup backup \
   /var/backups/pykasu/pykasu-2026-09-05.sqlite3
@@ -150,7 +150,7 @@ current database separately if you may need to return to it:
 
 ```sh
 sudo systemctl stop pykasu
-cd /opt/pykasu/poc
+cd /opt/pykasu/poc-py
 sudo -u pykasu env PYKASU_DATA_DIR=/var/lib/pykasu \
   /opt/pykasu/.venv/bin/python -m pykasu.backup restore \
   /var/backups/pykasu/pykasu-2026-09-05.sqlite3
@@ -171,9 +171,18 @@ then start it again:
 
 ```sh
 sudo systemctl stop pykasu
-cd /opt/pykasu/poc
+cd /opt/pykasu/poc-py
 sudo /opt/pykasu/.venv/bin/python -m pip install -r requirements.txt
 sudo systemctl start pykasu
 ```
 
 Check the service status and the Updates and Sources pages after every upgrade.
+
+## Vercel services
+
+The repository-root `vercel.json` exposes this Flask PoC under `/poc-py` and
+the NestJS PoC under `/poc-nest`. Select **Services** as the project framework
+in Vercel. This PoC uses temporary SQLite data at `/tmp/pykasu-py` when running
+on Vercel; data is not durable or shared across function instances. Its
+refresh worker is also best-effort in a serverless runtime and is not guaranteed
+to finish after a response.

@@ -1,14 +1,21 @@
-# LICENSE
+MIT License
 
-Copyright (c) 2026. All rights reserved.
+Copyright (c) 2026 Pykasu contributors
 
-## Terms of Use
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
 
-This repository and its contents are **free to use**, subject to the following strict conditions:
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
 
-1. **Permitted Use:** You are granted a non-exclusive, non-transferable, and revocable license to run, execute, and utilize the contents of this repository for personal, educational, or internal business purposes.
-2. **Prohibition on Copying and Redistribution:** You **strictly cannot copy, duplicate, replicate, redistribute, republish, or host** the source code, files, or assets of this repository in any public or private forum, website, or alternative repository (including but not limited to GitHub forks, clones, or mirrors) without prior written permission from the copyright owner.
-3. **No Derivatives:** You may not modify, alter, or create derivative works based upon the contents of this repository for public distribution.
-
----
-*This is for informational purposes only. For legal advice, consult a professional.*
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.

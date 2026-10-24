@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Updates — PYKASU</title><link rel="stylesheet" href="/assets/style.css">
+  <title>Updates — PYKASU</title><link rel="stylesheet" href="__BASE_PATH__/assets/style.css">
 </head>
-<body data-page="updates">
+<body data-page="updates" data-base-path="__BASE_PATH__">
   <header class="masthead shell">
-    <a class="brand" href="/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
-    <nav><a class="active" href="/updates">Updates</a><a href="/sources">Sources</a></nav>
+    <a class="brand" href="__BASE_PATH__/updates"><span class="brand-mark">P</span><span>PYKASU<small>Independent reading</small></span></a>
+    <nav><a class="active" href="__BASE_PATH__/updates">Updates</a><a href="__BASE_PATH__/sources">Sources</a></nav>
     <button id="refresh" class="button dark">Refresh now <span aria-hidden="true">↻</span></button>
   </header>
   <main class="shell">
@@ -23,6 +23,6 @@
     <section id="items" class="items" aria-label="Recent updates"></section>
   </main>
   <footer class="shell footer"><span>PYKASU PoC 2</span><span>Headlines are presented as reported by their original sources.</span></footer>
-  <script src="/assets/app.js" defer></script>
+  <script src="__BASE_PATH__/assets/app.js" defer></script>
 </body>
 </html>

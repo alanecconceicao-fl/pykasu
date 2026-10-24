@@ -20,4 +20,4 @@ dependencies = [
 packages = ["pykasu"]
 
 [tool.setuptools.package-data]
-pykasu = ["templates/*.html", "static/*.css", "static/*.js"]
+pykasu = ["templates/*.html"]

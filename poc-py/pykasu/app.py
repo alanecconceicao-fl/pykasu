@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import sqlite3
+import os
 from datetime import timedelta
+from pathlib import Path
 from typing import Any
 
 from flask import Flask, Response, abort, flash, jsonify, redirect, render_template, request, url_for
@@ -39,7 +41,8 @@ def create_app(
         summary_provider=provider,
     )
 
-    app = Flask(__name__)
+    public_static = Path(__file__).resolve().parent.parent / "public" / "static"
+    app = Flask(__name__, static_folder=str(public_static), static_url_path="/static")
     # The public PoC has no login, but Flask flashes still need a per-instance
     # signing key. It does not protect API credentials and is never displayed.
     app.config.update(SECRET_KEY="pykasu-local-session-key")
@@ -160,7 +163,27 @@ def create_app(
     def refresh_status() -> Response:
         return jsonify(manager.status())
 
+    base_path = os.environ.get("PYKASU_BASE_PATH", "").rstrip("/")
+    if base_path:
+        app.wsgi_app = PrefixPathMiddleware(app.wsgi_app, base_path)
     return app
+
+
+class PrefixPathMiddleware:
+    """Mount Flask below a public path prefix while preserving url_for links."""
+
+    def __init__(self, application: Any, prefix: str) -> None:
+        self.application = application
+        self.prefix = "/" + prefix.strip("/")
+
+    def __call__(self, environ: dict[str, Any], start_response: Any) -> Any:
+        path_info = environ.get("PATH_INFO", "")
+        script_name = environ.get("SCRIPT_NAME", "").rstrip("/")
+        if path_info == self.prefix or path_info.startswith(self.prefix + "/"):
+            if not script_name.endswith(self.prefix):
+                environ["SCRIPT_NAME"] = script_name + self.prefix
+            environ["PATH_INFO"] = path_info[len(self.prefix):] or "/"
+        return self.application(environ, start_response)
 
 
 def _source_form_values(
