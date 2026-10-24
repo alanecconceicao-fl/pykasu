@@ -2,7 +2,7 @@
 
 These tests deliberately use feed, article, and model fakes injected through
 ``create_app``.  They make no DNS, HTTP, browser, or API-provider requests.
-Run them from ``poc/`` with ``python -m unittest discover -s tests -v``.
+Run them from ``poc-py/`` with ``python -m unittest discover -s tests -v``.
 """
 
 from __future__ import annotations

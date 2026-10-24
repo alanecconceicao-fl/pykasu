@@ -1,5 +1,5 @@
 {
-  "name": "pykasu-poc-2",
+  "name": "pykasu-poc-nest",
   "version": "0.2.0",
   "private": true,
   "description": "Chronological feed reader proof of concept built with NestJS and TypeScript",

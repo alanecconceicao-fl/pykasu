@@ -79,14 +79,14 @@ sudo useradd --system --home /var/lib/pykasu --shell /usr/sbin/nologin pykasu
 ```
 
 Place this checkout at `/opt/pykasu` (so that the application package is
-`/opt/pykasu/poc/pykasu`) and ensure the `pykasu` user can read it. Build the
+`/opt/pykasu/poc-py/pykasu`) and ensure the `pykasu` user can read it. Build the
 read-only runtime environment as an administrator before starting the service:
 
 ```sh
 cd /opt/pykasu
 sudo python3.12 -m venv .venv
 sudo .venv/bin/python -m pip install --upgrade pip
-sudo .venv/bin/python -m pip install -r poc/requirements.txt
+sudo .venv/bin/python -m pip install -r poc-py/requirements.txt
 ```
 
 Create the private data and configuration directories:

@@ -72,7 +72,7 @@ application data.
 ## VM deployment: systemd and Caddy
 
 The included `deploy/pykasu.service`, `deploy/pykasu.env.example`, and
-`deploy/Caddyfile` assume the checkout is installed at `/opt/pykasu/poc-2`,
+`deploy/Caddyfile` assume the checkout is installed at `/opt/pykasu/poc-nest`,
 the built output is under `dist/src/`, and persistent data is at
 `/var/lib/pykasu-node`. Replace `news.example.com` in the Caddy configuration
 with the supplied hostname. DNS, firewall rules, and Caddy installation are

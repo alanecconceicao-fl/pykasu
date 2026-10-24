@@ -47,7 +47,7 @@ Use one Python 3.12 application:
 
 Pin exact compatible dependency versions. No frontend build, ORM, embeddings, agent framework, external queue, or mandatory containers.
 
-Implement under the existing `poc/` directory. Provide:
+Implement under the existing `poc-py/` directory. Provide:
 
 - `python -m pykasu` to start the application.
 - Environment configuration for bind address, port, data directory, and API key.

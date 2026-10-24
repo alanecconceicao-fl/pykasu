@@ -48,7 +48,7 @@ Use one Node.js TypeScript application built with NestJS:
 
 Pin exact compatible dependency versions in the npm lockfile. No frontend build, ORM, embeddings, agent framework, external queue, or mandatory containers. Keep the browser application and backend in one deployable NestJS process.
 
-Implement under the existing `poc-2/` directory. Provide:
+Implement under the existing `poc-nest/` directory. Provide:
 
 - `npm run start:dev` for local development and `npm run start:prod` for the compiled application.
 - Environment configuration for bind address, port, data directory, and API key.
